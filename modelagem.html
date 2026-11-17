@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fabrika · Modelagem</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#0b0d2e; --bg2:#6b70dc; --glass:rgba(255,255,255,.06); --line:rgba(255,255,255,.14);
+  --txt:#f4f4ff; --mut:#b9bbe6; --peach:#f8dcc8; --ok:#8f93d6; --warn:#b79a62;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:"Outfit",system-ui,sans-serif;color:var(--txt);
+  background:linear-gradient(180deg,var(--bg1) 0%,#2a2d86 55%,var(--bg2) 100%) fixed;
+  display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--peach);outline-offset:2px}
+
+/* menu lateral */
+.side{padding:22px 16px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.brand b{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:var(--peach);color:#1b1d55;font-size:20px}
+.brand strong{display:block;font-size:20px}
+.brand small{font-size:11px;letter-spacing:.12em;color:var(--mut)}
+.grp{margin:16px 10px 4px;font-size:11px;letter-spacing:.14em;color:var(--mut)}
+.side a{padding:10px 12px;border-radius:10px;font-weight:500;display:flex;gap:10px;align-items:center}
+.side a::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--mut);opacity:.7}
+.side a:hover{background:var(--glass)}
+.side a.on{background:rgba(255,255,255,.12);font-weight:700}
+.side a.on::before{background:var(--peach);opacity:1}
+.user{margin-top:auto;padding:12px;display:flex;gap:10px;align-items:center;border-top:1px solid var(--line);font-weight:500}
+.user i{font-style:normal;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);font-size:12px}
+
+/* conteúdo */
+main{padding:20px 34px 40px;min-width:0}
+.top{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--mut)}
+.top .bc b{color:var(--txt)}
+.top input{margin-left:auto;width:260px;max-width:40vw;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:transparent}
+.top span{white-space:nowrap}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin:34px 0 26px}
+.head small{font-size:12px;letter-spacing:.14em;color:var(--mut)}
+h1{margin:4px 0 6px;font-size:48px;line-height:1.05;letter-spacing:-.02em}
+.head p{margin:0;color:var(--mut)}
+.acts{display:flex;gap:12px}
+.btn{padding:12px 20px;border-radius:12px;border:1px solid var(--txt);background:transparent;font-weight:600;cursor:pointer}
+.btn:hover{background:rgba(255,255,255,.1)}
+.btn.main{background:var(--peach);border-color:var(--peach);color:#2a1f3d}
+.btn.main:hover{background:#fff0e4}
+
+.tabs{display:flex;gap:26px;padding:0 18px;border-bottom:1px solid var(--line);overflow-x:auto;margin-bottom:22px}
+.tabs a{padding:16px 4px;font-weight:600;color:var(--mut);white-space:nowrap;border-bottom:2px solid transparent}
+.tabs a.on{color:var(--txt);border-color:var(--txt)}
+.tabs a:hover{color:var(--txt)}
+
+.card{background:var(--glass);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.bar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:18px 20px}
+.bar input{width:360px;max-width:100%;padding:12px 14px;border-radius:10px;border:2px solid var(--txt);background:rgba(10,12,50,.35)}
+.bar input::placeholder{color:var(--mut)}
+.bar div{display:flex;gap:14px;align-items:center}
+.bar select{padding:12px 14px;border-radius:10px;border:2px solid var(--txt);background:rgba(10,12,50,.55)}
+.bar select option{color:#111}
+.link{background:none;border:0;cursor:pointer;font-weight:500}
+.link:hover{text-decoration:underline}
+
+.wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{padding:18px 20px;text-align:left;white-space:nowrap}
+th{font-size:12px;letter-spacing:.08em;color:var(--txt);border-top:1px solid var(--line);border-bottom:1px solid var(--line);cursor:pointer;user-select:none}
+th:hover{color:var(--peach)}
+td{border-bottom:1px solid var(--line)}
+td:first-child{font-weight:700}
+.pill{display:inline-block;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600}
+.pill.Aprovada{background:var(--ok)}
+.pill.Em-teste,.pill.Ajustando{background:var(--warn)}
+.empty{padding:34px;text-align:center;color:var(--mut)}
+
+.foot{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;font-size:13px;color:var(--mut)}
+.pag{display:flex;gap:8px}
+.pag button{min-width:38px;height:38px;border-radius:9px;border:1px solid var(--line);background:var(--glass);cursor:pointer}
+.pag button.on{background:#b9bcf5;color:#1b1d55;font-weight:700;border-color:transparent}
+.pag button:disabled{opacity:.4;cursor:default}
+
+@media (max-width:900px){
+  body{grid-template-columns:1fr}
+  .side{display:none}
+  main{padding:16px}
+  h1{font-size:36px}
+  .top span{display:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .btn,.side a,th{transition:background .15s,color .15s}
+}
+</style>
+</head>
+<body>
+
+<aside class="side">
+  <div class="brand"><b>F</b><div><strong>fabrika</strong><small>PRODUÇÃO INTELIGENTE</small></div></div>
+  <a href="#">Dashboard</a>
+  <div class="grp">CADASTROS</div>
+  <a href="#">Tecidos</a>
+  <a href="#">Aviamentos</a>
+  <a href="#modelagem" class="on">Modelagem</a>
+  <a href="#">Beneficiamentos</a>
+  <a href="#">Fornecedores</a>
+  <a href="#">Clientes</a>
+  <div class="grp">ESTOQUE</div>
+  <a href="#">Tecidos</a>
+  <a href="#">Aviamentos</a>
+  <div class="grp">ENGENHARIA DE PRODUÇÃO</div>
+  <a href="#">Ficha técnica</a>
+  <div class="user"><i>CL</i>Carlos Lima</div>
+</aside>
+
+<main id="modelagem">
+  <div class="top">
+    <div class="bc">Cadastros / <b>Modelagem</b></div>
+    <input type="search" placeholder="Busca global" aria-label="Busca global">
+    <span id="sync">Dados sincronizados</span>
+    <span>Notificações</span>
+  </div>
+
+  <div class="head">
+    <div>
+      <small>CADASTRO</small>
+      <h1>Modelagem</h1>
+      <p>Modelos, consumo previsto e tabelas de medidas.</p>
+    </div>
+    <div class="acts">
+      <button class="btn">Histórico</button>
+      <button class="btn main" id="nova">+ Nova modelagem</button>
+    </div>
+  </div>
+
+  <nav class="tabs">
+    <a href="#">Tecidos</a>
+    <a href="#">Aviamentos</a>
+    <a href="#modelagem" class="on">Modelagem</a>
+    <a href="#">Beneficiamentos</a>
+    <a href="#">Fornecedores</a>
+    <a href="#">Clientes</a>
+  </nav>
+
+  <section class="card">
+    <div class="bar">
+      <input type="search" id="busca" placeholder="Buscar em modelagem…" aria-label="Buscar em modelagem">
+      <div>
+        <select id="filtro" aria-label="Filtrar por status">
+          <option>Todos</option>
+          <option>Aprovada</option>
+          <option>Em teste</option>
+          <option>Ajustando</option>
+        </select>
+        <button class="link" id="atualizar">Atualizar</button>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <table>
+        <thead>
+          <tr>
+            <th data-k="codigo">CÓDIGO ↕</th>
+            <th data-k="modelo">MODELO ↕</th>
+            <th data-k="consumo">CONSUMO ↕</th>
+            <th data-k="tamanhos">TAMANHOS ↕</th>
+            <th data-k="molde">MOLDE ↕</th>
+            <th data-k="data">ATUALIZAÇÃO ↕</th>
+            <th data-k="status">STATUS ↕</th>
+          </tr>
+        </thead>
+        <tbody id="corpo"></tbody>
+      </table>
+    </div>
+
+    <div class="foot">
+      <span id="info"></span>
+      <div class="pag" id="pag"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+// dados de exemplo (depois dá pra trocar por um banco/API)
+var dados = [
+  {codigo:"MOD-041", modelo:"Camiseta básica",     consumo:1.35, tamanhos:"P / M / G / GG", molde:"molde_camisa.pdf", data:"2026-06-18", status:"Aprovada"},
+  {codigo:"MOD-036", modelo:"Polo clássica",       consumo:1.55, tamanhos:"P / M / G / GG", molde:"polo_v4.dxf",      data:"2026-06-15", status:"Em teste"},
+  {codigo:"MOD-029", modelo:"Moletom canguru",     consumo:2.10, tamanhos:"P / M / G / GG", molde:"moletom.dxf",      data:"2026-06-10", status:"Ajustando"},
+  {codigo:"MOD-024", modelo:"Calça jogger",        consumo:1.80, tamanhos:"P / M / G / GG", molde:"jogger_v2.dxf",    data:"2026-06-05", status:"Aprovada"},
+  {codigo:"MOD-018", modelo:"Regata fitness",      consumo:0.95, tamanhos:"P / M / G",      molde:"regata.pdf",       data:"2026-05-28", status:"Em teste"},
+  {codigo:"MOD-012", modelo:"Jaqueta corta-vento", consumo:2.40, tamanhos:"M / G / GG",     molde:"jaqueta_v1.dxf",   data:"2026-05-20", status:"Ajustando"}
+];
+
+var porPagina = 3, pagina = 1, ordem = {k:"data", asc:false};
+var corpo = document.getElementById("corpo");
+
+function dataBR(iso){ var p = iso.split("-"); return p[2] + "/" + p[1] + "/" + p[0]; }
+function metros(n){ return n.toFixed(2).replace(".", ",") + " m"; }
+
+function filtrar(){
+  var termo = document.getElementById("busca").value.toLowerCase();
+  var st = document.getElementById("filtro").value;
+  return dados.filter(function(d){
+    var texto = (d.codigo + d.modelo + d.molde).toLowerCase();
+    return texto.indexOf(termo) > -1 && (st === "Todos" || d.status === st);
+  }).sort(function(a, b){
+    var r = a[ordem.k] > b[ordem.k] ? 1 : a[ordem.k] < b[ordem.k] ? -1 : 0;
+    return ordem.asc ? r : -r;
+  });
+}
+
+function desenhar(){
+  var lista = filtrar();
+  var paginas = Math.max(1, Math.ceil(lista.length / porPagina));
+  if (pagina > paginas) pagina = paginas;
+  var parte = lista.slice((pagina - 1) * porPagina, pagina * porPagina);
+
+  corpo.innerHTML = parte.length ? "" : '<tr><td colspan="7" class="empty">Nenhum modelo encontrado. Ajuste a busca ou o filtro.</td></tr>';
+  parte.forEach(function(d){
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + d.codigo + "</td><td>" + d.modelo + "</td><td>" + metros(d.consumo) +
+      "</td><td>" + d.tamanhos + "</td><td>" + d.molde + "</td><td>" + dataBR(d.data) +
+      '</td><td><span class="pill ' + d.status.replace(" ", "-") + '">' +
+      (d.status === "Aprovada" ? "✓ " : "• ") + d.status + "</span></td>";
+    corpo.appendChild(tr);
+  });
+
+  document.getElementById("info").textContent = "Mostrando " + parte.length + " de " + lista.length + " registros";
+
+  var pag = document.getElementById("pag");
+  pag.innerHTML = "";
+  function botao(txt, alvo, ativo, off){
+    var b = document.createElement("button");
+    b.textContent = txt;
+    if (ativo) b.className = "on";
+    b.disabled = off;
+    b.onclick = function(){ pagina = alvo; desenhar(); };
+    pag.appendChild(b);
+  }
+  botao("‹", pagina - 1, false, pagina === 1);
+  for (var i = 1; i <= paginas; i++) botao(i, i, i === pagina, false);
+  botao("›", pagina + 1, false, pagina === paginas);
+}
+
+// ordenar ao clicar no cabeçalho
+document.querySelectorAll("th").forEach(function(th){
+  th.onclick = function(){
+    var k = th.dataset.k;
+    ordem.asc = ordem.k === k ? !ordem.asc : true;
+    ordem.k = k;
+    desenhar();
+  };
+});
+
+document.getElementById("busca").oninput = function(){ pagina = 1; desenhar(); };
+document.getElementById("filtro").onchange = function(){ pagina = 1; desenhar(); };
+document.getElementById("atualizar").onclick = function(){
+  var h = new Date().toLocaleTimeString("pt-BR", {hour:"2-digit", minute:"2-digit"});
+  document.getElementById("sync").textContent = "Dados sincronizados às " + h;
+  desenhar();
+};
+document.getElementById("nova").onclick = function(){
+  alert("Aqui vai abrir o formulário de nova modelagem.");
+};
+
+desenhar();
+</script>
+</body>
+</html>
