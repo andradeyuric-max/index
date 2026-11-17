@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fabrika · Modelagem</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#16171d; --side:#111216; --card:#1c1d24; --line:#2b2d36;
+  --txt:#f2f2f4; --mut:#9a9ca8; --btn:#f2f2f4; --btn-txt:#16171d;
+  --ok:#2a2c33; --warn:#3a3322; --warn-txt:#e7c76a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:"Inter",system-ui,sans-serif;background:var(--bg);color:var(--txt);
+  display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--txt);outline-offset:2px}
+
+/* menu lateral */
+.side{background:var(--side);border-right:1px solid var(--line);padding:18px 14px;display:flex;flex-direction:column;gap:2px}
+.brand{display:flex;align-items:center;gap:12px;padding:6px 8px 18px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.brand b{display:grid;place-items:center;width:40px;height:40px;border-radius:10px;background:var(--btn);color:var(--btn-txt);font-size:18px}
+.brand strong{display:block;font-size:17px}
+.brand small{font-size:10px;letter-spacing:.14em;color:var(--mut)}
+.grp{margin:18px 10px 6px;font-size:11px;letter-spacing:.12em;color:var(--mut);font-weight:600}
+.side a{padding:10px 12px;border-radius:8px;font-weight:500;color:#d6d7de;display:flex;gap:12px;align-items:center}
+.side a i{font-style:normal;width:16px;text-align:center;color:var(--mut)}
+.side a:hover{background:#1a1b21}
+.side a.on{background:#000;color:#fff;font-weight:600;border:1px solid var(--line)}
+.user{margin-top:auto;padding:14px 8px 4px;border-top:1px solid var(--line);display:flex;gap:10px;align-items:center;font-weight:500}
+.user span{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#3a3c46;font-size:12px;font-weight:700}
+
+/* conteúdo */
+main{padding:0 0 40px;min-width:0}
+.top{display:flex;align-items:center;gap:14px;padding:18px 32px;border-bottom:1px solid var(--line);font-size:14px;color:var(--mut)}
+.top .bc b{color:var(--txt)}
+.top input{margin-left:auto;width:290px;max-width:36vw;padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card)}
+.top .sync{white-space:nowrap;display:flex;align-items:center;gap:8px;font-weight:600;color:var(--txt)}
+.top .sync::before{content:"";width:8px;height:8px;border-radius:50%;background:#8a8c96}
+.top .notif{white-space:nowrap;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--txt);font-weight:600}
+.wrapper{padding:28px 32px}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.head small{font-size:12px;letter-spacing:.14em;color:var(--mut);font-weight:600}
+h1{margin:6px 0 8px;font-size:44px;line-height:1.05;letter-spacing:-.02em}
+.head p{margin:0;color:var(--mut)}
+.acts{display:flex;gap:12px}
+.btn{padding:12px 20px;border-radius:8px;border:1px solid #3a3c46;background:transparent;font-weight:600;cursor:pointer}
+.btn:hover{background:#1f2028}
+.btn.main{background:var(--btn);border-color:var(--btn);color:var(--btn-txt)}
+.btn.main:hover{background:#ffffff}
+
+.tabs{display:flex;gap:28px;padding:0 24px;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow-x:auto;margin-bottom:20px}
+.tabs a{padding:18px 0;font-weight:600;color:var(--mut);white-space:nowrap;border-bottom:2px solid transparent}
+.tabs a.on{color:var(--txt);border-color:var(--txt)}
+.tabs a:hover{color:var(--txt)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.bar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:20px}
+.bar input{width:380px;max-width:100%;padding:12px 14px;border-radius:8px;border:1px solid #3a3c46;background:var(--bg)}
+.bar input::placeholder{color:var(--mut)}
+.bar div{display:flex;gap:12px;align-items:center}
+.bar select{padding:11px 14px;border-radius:8px;border:1px solid #3a3c46;background:var(--bg);min-width:150px}
+.bar select option{color:#111}
+.link{padding:11px 16px;border:1px solid var(--line);background:transparent;border-radius:8px;cursor:pointer;color:var(--mut);font-weight:500}
+.link:hover{color:var(--txt)}
+
+.wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:820px}
+th,td{padding:18px 20px;text-align:left;white-space:nowrap}
+th{font-size:12px;letter-spacing:.06em;color:var(--txt);background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);cursor:pointer;user-select:none;font-weight:600}
+th:hover{color:#fff}
+td{border-bottom:1px solid var(--line);color:var(--mut)}
+td:first-child{font-weight:700;color:var(--txt)}
+.pill{display:inline-block;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;background:var(--ok);color:var(--txt)}
+.pill.Em-teste,.pill.Ajustando{background:var(--warn);color:var(--warn-txt)}
+.empty{padding:34px;text-align:center;color:var(--mut)}
+
+.foot{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;font-size:13px;color:var(--mut)}
+.pag{display:flex;gap:8px}
+.pag button{min-width:40px;height:40px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--txt)}
+.pag button.on{background:#9a9ca8;color:#111;font-weight:700;border-color:transparent}
+.pag button:disabled{opacity:.4;cursor:default}
+
+@media (max-width:900px){
+  body{grid-template-columns:1fr}
+  .side{display:none}
+  .top{padding:14px 16px;flex-wrap:wrap}
+  .top .sync{display:none}
+  .wrapper{padding:20px 16px}
+  h1{font-size:34px}
+}
+</style>
+</head>
+<body>
+
+<aside class="side">
+  <div class="brand"><b>F</b><div><strong>fabrika</strong><small>PRODUÇÃO INTELIGENTE</small></div></div>
+  <a href="#"><i>▦</i>Dashboard</a>
+  <div class="grp">CADASTROS</div>
+  <a href="#"><i>◈</i>Tecidos</a>
+  <a href="#"><i>▣</i>Aviamentos</a>
+  <a href="#modelagem" class="on"><i>▥</i>Modelagem</a>
+  <a href="#"><i>✦</i>Beneficiamentos</a>
+  <a href="#"><i>▭</i>Fornecedores</a>
+  <a href="#"><i>▤</i>Clientes</a>
+  <div class="grp">ESTOQUE</div>
+  <a href="#"><i>◈</i>Tecidos</a>
+  <a href="#"><i>▣</i>Aviamentos</a>
+  <div class="grp">ENGENHARIA DE PRODUÇÃO</div>
+  <a href="#"><i>▭</i>Ficha técnica</a>
+  <div class="user"><span>CL</span>Carlos Lima</div>
+</aside>
+
+<main id="modelagem">
+  <div class="top">
+    <div class="bc">Cadastros / <b>Modelagem</b></div>
+    <input type="search" placeholder="Buscar no sistema…" aria-label="Buscar no sistema">
+    <span class="sync" id="sync">Dados sincronizados</span>
+    <span class="notif">Notificações</span>
+  </div>
+
+  <div class="wrapper">
+    <div class="head">
+      <div>
+        <small>CADASTRO</small>
+        <h1>Modelagem</h1>
+        <p>Modelos, consumo previsto e tabelas de medidas.</p>
+      </div>
+      <div class="acts">
+        <button class="btn">Histórico</button>
+        <button class="btn main" id="nova">+ Nova modelagem</button>
+      </div>
+    </div>
+
+    <nav class="tabs">
+      <a href="#">Tecidos</a>
+      <a href="#">Aviamentos</a>
+      <a href="#modelagem" class="on">Modelagem</a>
+      <a href="#">Beneficiamentos</a>
+      <a href="#">Fornecedores</a>
+      <a href="#">Clientes</a>
+    </nav>
+
+    <section class="card">
+      <div class="bar">
+        <input type="search" id="busca" placeholder="Buscar em modelagem…" aria-label="Buscar em modelagem">
+        <div>
+          <select id="filtro" aria-label="Filtrar por status">
+            <option>Todos</option>
+            <option>Aprovada</option>
+            <option>Em teste</option>
+            <option>Ajustando</option>
+          </select>
+          <button class="link" id="atualizar">Atualizar</button>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-k="codigo">CÓDIGO ↕</th>
+              <th data-k="modelo">MODELO ↕</th>
+              <th data-k="consumo">CONSUMO ↕</th>
+              <th data-k="tamanhos">TAMANHOS ↕</th>
+              <th data-k="molde">MOLDE ↕</th>
+              <th data-k="data">ATUALIZAÇÃO ↕</th>
+              <th data-k="status">STATUS ↕</th>
+            </tr>
+          </thead>
+          <tbody id="corpo"></tbody>
+        </table>
+      </div>
+
+      <div class="foot">
+        <span id="info"></span>
+        <div class="pag" id="pag"></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+var dados = [
+  {codigo:"MOD-041", modelo:"Camiseta básica",     consumo:1.35, tamanhos:"P / M / G / GG", molde:"molde_camisa.pdf", data:"2026-06-18", status:"Aprovada"},
+  {codigo:"MOD-036", modelo:"Polo clássica",       consumo:1.55, tamanhos:"P / M / G / GG", molde:"polo_v4.dxf",      data:"2026-06-15", status:"Em teste"},
+  {codigo:"MOD-029", modelo:"Moletom canguru",     consumo:2.10, tamanhos:"P / M / G / GG", molde:"moletom.dxf",      data:"2026-06-10", status:"Ajustando"},
+  {codigo:"MOD-024", modelo:"Calça jogger",        consumo:1.80, tamanhos:"P / M / G / GG", molde:"jogger_v2.dxf",    data:"2026-06-05", status:"Aprovada"},
+  {codigo:"MOD-018", modelo:"Regata fitness",      consumo:0.95, tamanhos:"P / M / G",      molde:"regata.pdf",       data:"2026-05-28", status:"Em teste"},
+  {codigo:"MOD-012", modelo:"Jaqueta corta-vento", consumo:2.40, tamanhos:"M / G / GG",     molde:"jaqueta_v1.dxf",   data:"2026-05-20", status:"Ajustando"}
+];
+
+var porPagina = 3, pagina = 1, ordem = {k:"data", asc:false};
+var corpo = document.getElementById("corpo");
+
+function dataBR(iso){ var p = iso.split("-"); return p[2] + "/" + p[1] + "/" + p[0]; }
+function metros(n){ return n.toFixed(2).replace(".", ",") + " m"; }
+
+function filtrar(){
+  var termo = document.getElementById("busca").value.toLowerCase();
+  var st = document.getElementById("filtro").value;
+  return dados.filter(function(d){
+    var texto = (d.codigo + d.modelo + d.molde).toLowerCase();
+    return texto.indexOf(termo) > -1 && (st === "Todos" || d.status === st);
+  }).sort(function(a, b){
+    var r = a[ordem.k] > b[ordem.k] ? 1 : a[ordem.k] < b[ordem.k] ? -1 : 0;
+    return ordem.asc ? r : -r;
+  });
+}
+
+function desenhar(){
+  var lista = filtrar();
+  var paginas = Math.max(1, Math.ceil(lista.length / porPagina));
+  if (pagina > paginas) pagina = paginas;
+  var parte = lista.slice((pagina - 1) * porPagina, pagina * porPagina);
+
+  corpo.innerHTML = "";
+  if (!parte.length) {
+    corpo.innerHTML = '<tr><td colspan="7" class="empty">Nenhum modelo encontrado. Ajuste a busca ou o filtro.</td></tr>';
+  }
+  parte.forEach(function(d){
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + d.codigo + "</td><td>" + d.modelo + "</td><td>" + metros(d.consumo) +
+      "</td><td>" + d.tamanhos + "</td><td>" + d.molde + "</td><td>" + dataBR(d.data) +
+      '</td><td><span class="pill ' + d.status.replace(" ", "-") + '">' +
+      (d.status === "Aprovada" ? "✓ " : "• ") + d.status + "</span></td>";
+    corpo.appendChild(tr);
+  });
+
+  document.getElementById("info").textContent = "Mostrando " + parte.length + " de " + lista.length + " registros";
+
+  var pag = document.getElementById("pag");
+  pag.innerHTML = "";
+  function botao(txt, alvo, ativo, off){
+    var b = document.createElement("button");
+    b.textContent = txt;
+    if (ativo) b.className = "on";
+    b.disabled = off;
+    b.onclick = function(){ pagina = alvo; desenhar(); };
+    pag.appendChild(b);
+  }
+  botao("‹", pagina - 1, false, pagina === 1);
+  for (var i = 1; i <= paginas; i++) botao(i, i, i === pagina, false);
+  botao("›", pagina + 1, false, pagina === paginas);
+}
+
+document.querySelectorAll("th").forEach(function(th){
+  th.onclick = function(){
+    var k = th.dataset.k;
+    ordem.asc = ordem.k === k ? !ordem.asc : true;
+    ordem.k = k;
+    desenhar();
+  };
+});
+
+document.getElementById("busca").oninput = function(){ pagina = 1; desenhar(); };
+document.getElementById("filtro").onchange = function(){ pagina = 1; desenhar(); };
+document.getElementById("atualizar").onclick = function(){
+  var h = new Date().toLocaleTimeString("pt-BR", {hour:"2-digit", minute:"2-digit"});
+  document.getElementById("sync").textContent = "Dados sincronizados às " + h;
+  desenhar();
+};
+document.getElementById("nova").onclick = function(){
+  alert("Aqui vai abrir o formulário de nova modelagem.");
+};
+
+desenhar();
+</script>
+</body>
+</html>
